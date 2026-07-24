@@ -1,6 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-set -euo pipefail
+set -Eeuo pipefail
 
 echo "=========================================="
 echo " Sistema base"
@@ -18,41 +18,44 @@ echo
 echo "Instalando herramientas base..."
 
 sudo zypper install -y \
+bash \
 bash-completion \
-btop \
-cmake \
-curl \
-fastfetch \
-ffmpeg \
-ffmpegthumbnailer \
-gcc \
-gcc-c++ \
-git \
 gzip \
-htop \
-make \
-nano \
-neovim \
 tar \
-tree \
-unrar \
-unzip \
-vim \
-wget \
 xz \
-yt-dlp \
-zip
-
-echo
-echo "Instalando utilidades..."
-
-sudo zypper install -y \
-file \
-which \
-rsync \
-openssh \
+zip \
+unzip \
+unrar \
+wget \
+curl \
 ca-certificates \
 openssl \
+openssh \
+file \
+which \
+rsync
+
+echo
+echo "Instalando herramientas de desarrollo..."
+
+sudo zypper install -y \
+gcc \
+gcc-c++ \
+make \
+cmake \
+git
+
+echo
+echo "Instalando utilidades del sistema..."
+
+sudo zypper install -y \
+nano \
+vim \
+neovim \
+tree \
+btop \
+htop \
+fastfetch \
 pciutils \
 usbutils \
 lshw \

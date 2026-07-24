@@ -1,35 +1,51 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-set -e
+set -Eeuo pipefail
 
 echo "=========================================="
 echo "      DaVinci Resolve Installer"
 echo "=========================================="
 
-INSTALLER_DIR="$HOME/Instaladores"
+PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+INSTALLER_DIR="$PROJECT_DIR/installers"
 
 echo
 echo "Buscando instalador..."
 
-INSTALLER=$(find "$INSTALLER_DIR" -maxdepth 1 -type f -name "DaVinci_Resolve*_Linux.run" | head -n 1)
-
-if [ -z "$INSTALLER" ]; then
-    echo
-    echo "❌ No se encontró el instalador."
-    echo
-    echo "Descarga DaVinci Resolve Studio para Linux"
-    echo "y copia el archivo .run a:"
-    echo
+if [[ ! -d "$INSTALLER_DIR" ]]; then
+    echo "No existe la carpeta:"
     echo "$INSTALLER_DIR"
     exit 1
 fi
 
+INSTALLER=$(find "$INSTALLER_DIR" \
+    -maxdepth 1 \
+    -type f \
+    -name "DaVinci_Resolve*_Linux.run" \
+    | head -n1)
+
+if [[ -z "$INSTALLER" ]]; then
+    echo
+    echo "No se encontró ningún instalador de DaVinci Resolve."
+    echo
+    echo "Copia el archivo .run dentro de:"
+    echo "$INSTALLER_DIR"
+    exit 1
+fi
+
+if [[ -d /opt/resolve ]]; then
+    echo
+    echo "DaVinci Resolve ya está instalado."
+    exit 0
+fi
+
 echo
-echo "✓ Instalador encontrado:"
+echo "Instalador encontrado:"
 echo "$INSTALLER"
 
 echo
-echo "Actualizando repositorios..."
+echo "Actualizando metadatos..."
+
 sudo zypper refresh
 
 echo
@@ -61,13 +77,13 @@ echo "Ejecutando instalador..."
 SKIP_PACKAGE_CHECK=1 "$INSTALLER"
 
 echo
-echo "Comprobando instalación..."
+echo "Verificando instalación..."
 
-if [ -d "/opt/resolve" ]; then
-    echo "✓ DaVinci Resolve instalado correctamente."
+if [[ -d /opt/resolve ]]; then
+    echo "DaVinci Resolve instalado correctamente."
 else
     echo
-    echo "❌ La instalación parece haber fallado."
+    echo "La instalación parece haber fallado."
     exit 1
 fi
 
@@ -77,4 +93,4 @@ echo "      Instalación completada"
 echo "=========================================="
 
 echo
-echo "Es recomendable reiniciar el equipo antes de abrir DaVinci."
+echo "Se recomienda reiniciar el equipo antes de abrir DaVinci Resolve."

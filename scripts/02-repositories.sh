@@ -1,24 +1,32 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-set -euo pipefail
+set -Eeuo pipefail
 
 echo "=========================================="
-echo " Configurando repositorios"
+echo " Configuración de repositorios"
 echo "=========================================="
 
 echo
-echo "Actualizando información..."
+echo "Verificando repositorios..."
 
-sudo zypper refresh
-
-echo
-echo "Repositorios actuales:"
-zypper repos
-
-echo
-echo "Actualizando prioridades..."
-
-sudo zypper refresh
+if ! zypper lr >/dev/null; then
+    echo "No fue posible obtener la lista de repositorios."
+    exit 1
+fi
 
 echo
-echo "Repositorios configurados correctamente."
+echo "Actualizando metadatos..."
+
+sudo zypper --gpg-auto-import-keys refresh
+
+echo
+echo "Repositorios habilitados:"
+zypper lr -d
+
+echo
+echo "Comprobando paquetes bloqueados..."
+
+zypper locks || true
+
+echo
+echo "Repositorios verificados correctamente."

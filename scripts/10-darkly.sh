@@ -1,6 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-set -euo pipefail
+set -Eeuo pipefail
 
 echo "=========================================="
 echo " Instalando Darkly"
@@ -8,6 +8,7 @@ echo "=========================================="
 
 WORKDIR="$HOME/.cache/opensuse-setup"
 REPO="$WORKDIR/Darkly"
+BUILD_DIR="$REPO/build"
 
 echo
 echo "Actualizando repositorios..."
@@ -56,24 +57,29 @@ mkdir -p "$WORKDIR"
 echo
 echo "Obteniendo Darkly..."
 
-if [ -d "$REPO/.git" ]; then
+if [[ -d "$REPO/.git" ]]; then
     cd "$REPO"
-    git pull
+    git pull --ff-only
 else
     git clone https://github.com/Bali10050/Darkly.git "$REPO"
     cd "$REPO"
 fi
 
 echo
-echo "Compilando..."
+echo "Preparando compilación..."
 
-rm -rf build
-mkdir build
-cd build
+mkdir -p "$BUILD_DIR"
+cd "$BUILD_DIR"
+
+echo
+echo "Configurando CMake..."
 
 cmake .. \
     -DBUILD_QT6=ON \
     -DBUILD_QT5=OFF
+
+echo
+echo "Compilando..."
 
 cmake --build . -j"$(nproc)"
 
@@ -83,12 +89,12 @@ echo "Instalando..."
 sudo cmake --install .
 
 echo
-echo "Verificando..."
+echo "Verificando instalación..."
 
-if [ -f /usr/lib64/qt6/plugins/org.kde.kdecoration2/org.kde.darkly.so ]; then
-    echo "✓ Darkly instalado correctamente."
+if find /usr -name "org.kde.darkly.so" 2>/dev/null | grep -q .; then
+    echo "Darkly instalado correctamente."
 else
-    echo "⚠ No se pudo verificar la instalación."
+    echo "No se pudo verificar Darkly automáticamente."
 fi
 
 echo

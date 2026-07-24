@@ -1,10 +1,18 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-set -e
+set -Eeuo pipefail
 
-echo "=================================="
-echo "Instalando herramientas multimedia"
-echo "=================================="
+echo "=========================================="
+echo " Herramientas multimedia"
+echo "=========================================="
+
+echo
+echo "Actualizando metadatos..."
+
+sudo zypper refresh
+
+echo
+echo "Instalando herramientas multimedia..."
 
 sudo zypper install -y \
 ffmpeg \
@@ -14,4 +22,4 @@ mediainfo \
 yt-dlp
 
 echo
-echo "✓ Multimedia instalada."
+echo "Herramientas multimedia instaladas correctamente."

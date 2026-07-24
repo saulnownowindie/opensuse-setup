@@ -1,13 +1,13 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-set -euo pipefail
+set -Eeuo pipefail
 
 echo "=========================================="
-echo " Instalando paquetes"
+echo " Instalando aplicaciones"
 echo "=========================================="
 
 echo
-echo "Actualizando repositorios..."
+echo "Actualizando metadatos..."
 
 sudo zypper refresh
 
@@ -16,18 +16,10 @@ echo "Instalando aplicaciones..."
 
 sudo zypper install -y \
 audacity \
-btop \
-curl \
 dolphin \
-fastfetch \
-ffmpeg \
-ffmpegthumbnailer \
 filelight \
 firefox \
-flatpak \
-git \
 gwenview \
-htop \
 kate \
 kcalc \
 kcharselect \
@@ -40,24 +32,13 @@ kio-admin \
 konsole \
 krita \
 libavcodec-full \
-mediainfo \
-nano \
-neofetch \
 obs-studio \
 okular \
 p7zip \
 partitionmanager \
 python3 \
 python3-pip \
-rsync \
-spectacle \
-tree \
-unrar \
-unzip \
-vlc \
-wget \
-yt-dlp \
-zip
+spectacle
 
 echo
 echo "Aplicaciones instaladas correctamente."
