@@ -1,0 +1,57 @@
+#!/bin/bash
+
+set -euo pipefail
+
+PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+echo "=========================================="
+echo " Respaldando configuración"
+echo "=========================================="
+
+mkdir -p "$PROJECT_DIR/config/.config"
+mkdir -p "$PROJECT_DIR/config/.local/share"
+
+echo
+echo "Respaldando configuración de KDE..."
+
+FILES=(
+kdeglobals
+kwinrc
+plasmarc
+plasmashellrc
+konsolerc
+dolphinrc
+spectaclerc
+kcminputrc
+kglobalshortcutsrc
+kscreenlockerrc
+powermanagementprofilesrc
+gtkrc
+gtkrc-2.0
+)
+
+for file in "${FILES[@]}"; do
+    if [ -f "$HOME/.config/$file" ]; then
+        cp "$HOME/.config/$file" "$PROJECT_DIR/config/.config/"
+        echo "✓ $file"
+    fi
+done
+
+echo
+echo "Respaldando temas..."
+
+cp -a ~/.local/share/color-schemes "$PROJECT_DIR/config/.local/share/" 2>/dev/null || true
+cp -a ~/.local/share/icons "$PROJECT_DIR/config/.local/share/" 2>/dev/null || true
+cp -a ~/.local/share/plasma "$PROJECT_DIR/config/.local/share/" 2>/dev/null || true
+
+echo
+echo "Respaldando temas personales..."
+
+cp -a ~/.themes "$PROJECT_DIR/config/" 2>/dev/null || true
+cp -a ~/.icons "$PROJECT_DIR/config/" 2>/dev/null || true
+cp -a ~/.fonts "$PROJECT_DIR/config/" 2>/dev/null || true
+
+echo
+echo "=========================================="
+echo " Respaldo finalizado"
+echo "=========================================="

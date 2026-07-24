@@ -3,40 +3,80 @@
 set -euo pipefail
 
 PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-BACKUP_DIR="$PROJECT_DIR/backups/$(date +%Y-%m-%d_%H-%M-%S)"
 
 echo "=========================================="
-echo " Creando respaldo"
+echo " Respaldando configuración"
 echo "=========================================="
 
-mkdir -p "$BACKUP_DIR"
+mkdir -p "$PROJECT_DIR/config/.config"
+mkdir -p "$PROJECT_DIR/config/.local/share"
 
 echo
-echo "Respaldando configuración..."
+echo "Respaldando configuración de KDE..."
 
-mkdir -p "$BACKUP_DIR/config"
+FILES=(
+kdeglobals
+kwinrc
+plasmarc
+plasmashellrc
+konsolerc
+dolphinrc
+spectaclerc
+kcminputrc
+kglobalshortcutsrc
+kscreenlockerrc
+powermanagementprofilesrc
+gtkrc
+gtkrc-2.0
+)
 
-cp -a ~/.config "$BACKUP_DIR/config/"
-cp -a ~/.local/share "$BACKUP_DIR/config/"
-cp -a ~/.themes "$BACKUP_DIR/config/" 2>/dev/null || true
-cp -a ~/.icons "$BACKUP_DIR/config/" 2>/dev/null || true
-cp -a ~/.fonts "$BACKUP_DIR/config/" 2>/dev/null || true
+for file in "${FILES[@]}"; do
+    if [ -f "$HOME/.config/$file" ]; then
+        cp "$HOME/.config/$file" "$PROJECT_DIR/config/.config/"
+        echo "✓ $file"
+    fi
+done
 
 echo
-echo "Guardando lista de paquetes..."
+echo "Respaldando temas..."
 
-rpm -qa | sort > "$BACKUP_DIR/packages-rpm.txt"
+cp -a ~/.local/share/color-schemes "$PROJECT_DIR/config/.local/share/" 2>/dev/null || true
+cp -a ~/.local/share/icons "$PROJECT_DIR/config/.local/share/" 2>/dev/null || true
+cp -a ~/.local/share/plasma "$PROJECT_DIR/config/.local/share/" 2>/dev/null || true
 
 echo
-echo "Guardando Flatpaks..."
+echo "Respaldando temas personales..."
 
-flatpak list --app --columns=application > "$BACKUP_DIR/packages-flatpak.txt"
+cp -a ~/.themes "$PROJECT_DIR/config/" 2>/dev/null || true
+cp -a ~/.icons "$PROJECT_DIR/config/" 2>/dev/null || true
+cp -a ~/.fonts "$PROJECT_DIR/config/" 2>/dev/null || true
+
+echo
+echo "Respaldando DaVinci Resolve..."
+
+if [ -d "$HOME/.local/share/DaVinciResolve" ]; then
+    mkdir -p "$PROJECT_DIR/config/.local/share"
+
+    cp -a "$HOME/.local/share/DaVinciResolve" \
+          "$PROJECT_DIR/config/.local/share/"
+
+    rm -rf "$PROJECT_DIR/config/.local/share/DaVinciResolve/logs"
+    rm -rf "$PROJECT_DIR/config/.local/share/DaVinciResolve/Fusion/DiskCache"
+    rm -f "$PROJECT_DIR/config/.local/share/DaVinciResolve/configs/OFXPluginCacheV2.xml"
+
+    echo "✓ DaVinci Resolve"
+fi
+
+echo
+echo "Respaldando AutoSubs..."
+
+if [ -d "$HOME/.local/share/com.autosubs" ]; then
+    cp -a "$HOME/.local/share/com.autosubs" \
+          "$PROJECT_DIR/config/.local/share/"
+    echo "✓ AutoSubs"
+fi
 
 echo
 echo "=========================================="
-echo " Respaldo completado"
+echo " Respaldo finalizado"
 echo "=========================================="
-
-echo
-echo "Ubicación:"
-echo "$BACKUP_DIR"
