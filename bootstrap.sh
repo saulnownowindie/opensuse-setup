@@ -1,6 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-set -euo pipefail
+set -Eeuo pipefail
 
 echo "=========================================="
 echo " OpenSUSE Setup Bootstrap"
@@ -19,20 +19,26 @@ sudo zypper install -y git curl
 
 INSTALL_DIR="$HOME/opensuse-setup"
 
-if [ -d "$INSTALL_DIR/.git" ]; then
+if [[ -d "$INSTALL_DIR/.git" ]]; then
     echo
     echo "Actualizando repositorio..."
-    git -C "$INSTALL_DIR" pull
+
+    git -C "$INSTALL_DIR" pull --ff-only
 else
     echo
     echo "Clonando repositorio..."
-    git clone https://github.com/saulnownowindie/opensuse-setup.git "$INSTALL_DIR"
+
+    git clone \
+    https://github.com/saulnownowindie/opensuse-setup.git \
+    "$INSTALL_DIR"
 fi
 
 cd "$INSTALL_DIR"
 
-chmod +x *.sh
-chmod +x scripts/*.sh
+echo
+echo "Asignando permisos..."
+
+find . -name "*.sh" -exec chmod +x {} \;
 
 echo
 echo "Iniciando instalación..."
