@@ -12,3 +12,15 @@ installers/*
 *.cache
 .DS_Store
 Thumbs.db
+
+# Configuración personal
+config/.local/share/icons/
+config/.icons/
+logs/
+backups/
+
+# Configuración local
+config/.local/share/icons/
+config/.icons/
+logs/
+backups/
