@@ -13,7 +13,7 @@ fi
 
 echo
 
-if rpm -q nvidia-video-G06 >/dev/null 2>&1; then
+if rpm -q nvidia-driver-G06-kmp-default >/dev/null 2>&1; then
     echo "Los drivers NVIDIA ya están instalados."
 
     if command -v nvidia-smi >/dev/null 2>&1; then
@@ -39,14 +39,14 @@ fi
 echo
 echo "Instalando drivers NVIDIA..."
 
-sudo zypper install -y \
+sudo zypper install -y --auto-agree-with-licenses \
 kernel-firmware-nvidia \
+nvidia-driver-G06-kmp-default \
 nvidia-video-G06 \
 nvidia-gl-G06 \
 nvidia-compute-G06 \
 nvidia-compute-utils-G06 \
-nvidia-settings \
-x11-video-nvidiaG06
+nvidia-settings
 
 echo
 echo "Reconstruyendo initramfs..."
