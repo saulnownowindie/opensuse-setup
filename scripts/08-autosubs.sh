@@ -15,14 +15,14 @@ echo "Buscando instalador..."
 INSTALLER=$(find "$INSTALLER_DIR" \
     -maxdepth 1 \
     -type f \
-    -name "AutoSubs*.deb" \
+    -name "AutoSubs*.rpm" \
     | head -n1)
 
 if [[ -z "$INSTALLER" ]]; then
     echo
     echo "No se encontró AutoSubs."
     echo
-    echo "Coloca el archivo .deb dentro de:"
+    echo "Coloca el archivo .rpm dentro de:"
     echo "$INSTALLER_DIR"
     exit 1
 fi
@@ -47,9 +47,20 @@ echo "Instalador encontrado:"
 echo "$INSTALLER"
 
 echo
+echo "Instalando dependencias de AutoSubs..."
+
+sudo zypper install -y \
+libwebkit2gtk-4_1-0
+
+echo
 echo "Instalando AutoSubs..."
 
-sudo zypper install -y "$INSTALLER"
+sudo rpm -i --nodeps "$INSTALLER"
+
+echo
+echo "Actualizando caché de librerías..."
+
+sudo ldconfig
 
 echo
 echo "Verificando instalación..."
