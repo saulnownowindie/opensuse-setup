@@ -19,15 +19,13 @@ fi
 echo
 echo "Agregando Flathub..."
 
-sudo flatpak remote-add \
-    --if-not-exists \
-    flathub \
-    https://flathub.org/repo/flathub.flatpakrepo
+sudo flatpak remote-add --if-not-exists flathub \
+ https://flathub.org/repo/flathub.flatpakrepo
 
 echo
 echo "Instalando aplicaciones Flatpak..."
 
-flatpak install -y --noninteractive flathub \
+sudo flatpak install -y flathub \
 com.spotify.Client \
 com.discordapp.Discord \
 com.heroicgameslauncher.hgl \
@@ -38,7 +36,7 @@ com.valvesoftware.Steam
 echo
 echo "Actualizando aplicaciones Flatpak..."
 
-flatpak update -y --noninteractive
+sudo flatpak update -y --noninteractive
 
 echo
 echo "✓ Flatpak configurado correctamente."
