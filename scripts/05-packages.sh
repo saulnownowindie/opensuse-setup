@@ -31,7 +31,6 @@ kgpg \
 kio-admin \
 konsole \
 krita \
-libavcodec-full \
 obs-studio \
 okular \
 p7zip \
