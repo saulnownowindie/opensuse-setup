@@ -1,60 +1,42 @@
 # openSUSE Setup
 
-Repositorio personal para instalar y configurar automáticamente mi entorno de trabajo en openSUSE Tumbleweed KDE.
+Mi configuración personal de openSUSE Tumbleweed KDE.
 
-## Incluye
+## 🚀 Instalación rápida
 
-- NVIDIA Drivers
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/saulnownowindie/opensuse-setup/main/bootstrap.sh)
+```
+
+## ¿Qué instala?
+
+- Drivers NVIDIA
 - KDE Plasma
 - DaVinci Resolve Studio
 - AutoSubs
 - Darkly
-- OBS Studio
 - FFmpeg
+- OBS Studio
 - Steam
-- Heroic
+- Heroic Games Launcher
 - Discord
 - Spotify
 - Stremio
 - Bottles
 - VLC
 - Audacity
-- Flatpak
-- Configuración de KDE
+- Configuración personal de KDE
 - Scripts de respaldo y restauración
 
-## Estructura
+## Requisitos
 
-```
-opensuse-setup/
-├── backup.sh
-├── restore.sh
-├── install.sh
-├── update.sh
-├── config/
-├── installers/
-├── logs/
-├── backups/
-└── scripts/
-```
+Antes de ejecutar el instalador, copia a la carpeta `installers/`:
 
-## Instalación
+- `DaVinci_Resolve_Studio_*.run`
+- `AutoSubs-*.deb`
+
+Luego ejecuta:
 
 ```bash
-git clone https://github.com/TU_USUARIO/opensuse-setup.git
-cd opensuse-setup
-chmod +x *.sh
-chmod +x scripts/*.sh
 ./install.sh
 ```
-
-## Antes de instalar
-
-Copiar a `installers/`:
-
-- DaVinci_Resolve_Studio_*.run
-- AutoSubs-*.deb
-
-## Después
-
-Se recomienda reiniciar el equipo.
