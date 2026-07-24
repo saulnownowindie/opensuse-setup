@@ -53,10 +53,10 @@ echo "Instalando dependencias..."
 
 sudo zypper install -y \
 fuse \
-libxcrypt-compat \
-libapr1 \
-libaprutil1 \
 libglib-2_0-0 \
+libglib-2_0-0-32bit \
+libgthread-2_0-0 \
+libgthread-2_0-0-32bit \
 libxcb-cursor0 \
 libcurl4 \
 libICE6 \
