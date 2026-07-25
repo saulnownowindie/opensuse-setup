@@ -141,8 +141,8 @@ declare -A MODULES=(
     ["10-darkly.sh"]="INSTALL_DARKLY"
     ["11-cleanup.sh"]="RUN_CLEANUP"
     ["12-verify.sh"]="RUN_VERIFY"
+    ["13-tools.sh"]="INSTALL_TOOLS"
 )
-
 ########################################
 # Buscar scripts
 ########################################
