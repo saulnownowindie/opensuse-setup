@@ -1,0 +1,17 @@
+[4f8a8279-d2bd-418c-b852-17a6b3ea129e]
+noborderrule=2
+
+[65717379-2793-4e46-b4a7-aaa32df36bca]
+Description=Preferencias para resolve resolve
+noborderrule=2
+wmclass=resolve resolve
+wmclasscomplete=true
+wmclassmatch=2
+
+[General]
+count=2
+rules=c7e1664f-88c9-42e5-961b-d296073be0e5,65717379-2793-4e46-b4a7-aaa32df36bca
+
+[c7e1664f-88c9-42e5-961b-d296073be0e5]
+Description=Nuevas preferencias de las ventanas
+wmclassmatch=1
