@@ -6,8 +6,6 @@ echo "=========================================="
 echo " Instalando herramientas multimedia"
 echo "=========================================="
 
-PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-
 echo
 echo "Instalando dependencias..."
 
@@ -56,21 +54,19 @@ FLOORP_PROFILE=$(find \
 | head -n1 || true)
 
 
-if [[ -z "$FLOORP_PROFILE" ]]; then
+if [[ -n "$FLOORP_PROFILE" ]]; then
 
-    echo
-    echo "No se encontró perfil Flatpak de Floorp."
-    echo "Los alias funcionarán sin cookies."
+    COOKIE_BROWSER="firefox:$FLOORP_PROFILE"
 
-    COOKIE_BROWSER="firefox"
-
-else
-
-    echo
     echo "Perfil Floorp encontrado:"
     echo "$FLOORP_PROFILE"
 
-    COOKIE_BROWSER="firefox:$FLOORP_PROFILE"
+else
+
+    COOKIE_BROWSER="firefox"
+
+    echo "No se encontró Floorp Flatpak."
+    echo "Usando Firefox estándar."
 
 fi
 
@@ -79,21 +75,21 @@ echo
 echo "Configurando alias..."
 
 
-ALIAS_FILE="$HOME/.bashrc"
+BASHRC="$HOME/.bashrc"
 
 
-cat <<EOF >> "$ALIAS_FILE"
+# Eliminar configuración anterior
+sed -i '/# >>> OPEN-SUSE MULTIMEDIA TOOLS >>>/,/# <<< OPEN-SUSE MULTIMEDIA TOOLS <<</d' "$BASHRC"
 
 
-# ======================================
-# yt-dlp multimedia
-# ======================================
+cat <<EOF >> "$BASHRC"
 
-# Descargar videos hasta 1080p
-# Compatible con YouTube, TikTok, Instagram,
-# Facebook, X y otras plataformas soportadas
 
-alias ytv='yt-dlp \
+# >>> OPEN-SUSE MULTIMEDIA TOOLS >>>
+
+# Descargar vídeo hasta 1080p
+
+alias ytv='\$HOME/.local/bin/yt-dlp \
 --js-runtimes node:/usr/bin/node \
 --cookies-from-browser "$COOKIE_BROWSER" \
 -f "bestvideo[height<=1080]+bestaudio/best[height<=1080]" \
@@ -102,9 +98,8 @@ alias ytv='yt-dlp \
 
 
 # Descargar audio WAV
-# Preparado para edición en DaVinci Resolve
 
-alias yta='yt-dlp \
+alias yta='\$HOME/.local/bin/yt-dlp \
 --js-runtimes node:/usr/bin/node \
 --cookies-from-browser "$COOKIE_BROWSER" \
 -x \
@@ -112,6 +107,42 @@ alias yta='yt-dlp \
 --audio-quality 0 \
 --embed-metadata \
 -o "%(artist,uploader)s/%(title)s.%(ext)s"'
+
+
+alias pcm='
+for file in *.MOV *.mov; do
+    [ -e "\$file" ] || continue
+
+    temp="\${file%.*}_pcm_temp.mov"
+
+    echo "Procesando: \$file"
+
+    ffmpeg -y \
+    -i "\$file" \
+    -map 0:v:0 \
+    -map 0:a:0 \
+    -c:v copy \
+    -c:a pcm_s24le \
+    -ar 48000 \
+    -ac 2 \
+    -map_metadata 0 \
+    -movflags use_metadata_tags \
+    -metadata:s:v:0 handler_name="Core Media Video" \
+    -metadata:s:a:0 handler_name="Core Media Audio" \
+    "\$temp"
+
+    if [ -f "\$temp" ]; then
+        mv -f "\$temp" "\$file"
+        echo "Audio PCM aplicado: \$file"
+    else
+        echo "Error procesando: \$file"
+    fi
+
+done
+'
+
+
+# <<< OPEN-SUSE MULTIMEDIA TOOLS <<<
 
 
 EOF
@@ -122,7 +153,7 @@ echo "Verificando instalación..."
 
 echo
 echo "yt-dlp:"
-$HOME/.local/bin/yt-dlp --version || yt-dlp --version
+$HOME/.local/bin/yt-dlp --version
 
 
 echo
@@ -131,7 +162,7 @@ ffmpeg -version | head -n1
 
 
 echo
-echo "node:"
+echo "Node:"
 node --version
 
 
@@ -141,11 +172,10 @@ echo " Herramientas configuradas"
 echo "=========================================="
 
 echo
-echo "Comandos disponibles:"
-echo
-echo " ytv URL  -> descargar video MP4 hasta 1080p"
-echo " yta URL  -> descargar audio WAV"
+echo "Comandos:"
+echo " ytv URL       -> vídeo MP4 hasta 1080p"
+echo " yta URL       -> audio WAV"
+echo " iphonepcm     -> MOV iPhone a PCM WAV"
 echo
 echo "Ejecuta:"
 echo " source ~/.bashrc"
-echo "para activar los alias."

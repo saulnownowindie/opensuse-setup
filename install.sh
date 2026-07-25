@@ -142,6 +142,7 @@ declare -A MODULES=(
     ["11-cleanup.sh"]="RUN_CLEANUP"
     ["12-verify.sh"]="RUN_VERIFY"
     ["13-tools.sh"]="INSTALL_TOOLS"
+    ["14-gaming.sh"]="INSTALL_GAMING"
 )
 ########################################
 # Buscar scripts
