@@ -1,0 +1,41 @@
+timing,TB1, 0, 1, 455, 1, 0, 1
+timing,CopyViaFader, 0, 1, 455, 1, 0, 1
+timing,CopyViaFader, 0, 1, 455, 2, 0, 1.00578
+timing,Metering, 0, 1, 455, 1, 0, 1
+timing,Metering, 0, 1, 455, 2, 0, 1
+timing,Metering, 0, 1, 455, 12, 0, 3.02367
+timing,Metering, 0, 1, 455, 16, 0, 3.90837
+timing,Metering, 0, 1, 455, 24, 0, 5.52247
+timing,Dynamics3, 0, 1, 455, 1, 0, 8.57795
+timing,Dynamics3, 0, 1, 455, 2, 0, 1
+timing,SourceReady, 0, 1, 455, 1, 0, 1
+timing,SourceReady, 0, 1, 455, 2, 0, 1
+timing,StartMix, 0, 1, 455, 2, 0, 1.1105
+timing,EQ8, 0, 1, 455, 1, 0, 5.0884
+timing,EQ8, 0, 1, 455, 2, 0, 1.11782
+timing,AmbisonicsRenderer, 0, 1, 455, 12, 0, 1.17219
+timing,Monitoring, 0, 1, 455, 2, 0, 1.3097
+timing,Output, 0, 1, 455, 1, 0, 1
+timing,EndOfRealtime, 0, 1, 455, 0, 0, 1
+timing,Previewer, 0, 1, 455, 16, 0, 1
+timing,Generators, 0, 1, 455, 4, 0, 8.03867
+timing,Loudness, 0, 1, 455, 1, 0, 1.98187
+timing,AddToMix2, 0, 1, 455, 1, 2, 1
+timing,AddToMix2, 0, 1, 455, 2, 2, 1
+timing,Track, 0, 1, 455, 1, 0, 9.63415
+timing,Track, 0, 1, 455, 2, 0, 4.18687
+timing,TrackStart, 0, 1, 455, 1, 0, 1
+timing,TrackStart, 0, 1, 455, 2, 0, 1
+timing,LoudMax, 0, 1, 455, 1, 0, 1
+timing,LoudMax, 0, 1, 455, 2, 0, 1
+timing,SonoBus, 0, 1, 455, 2, 0, 1
+timing,TDR Nova, 0, 1, 455, 1, 0, 1
+timing,TDR Nova, 0, 1, 455, 2, 0, 1
+timing,De-Esser, 0, 1, 455, 1, 0, 15.33
+timing,De-Esser, 0, 1, 455, 2, 0, 17.66
+timing,FETish, 0, 1, 455, 1, 0, 1
+timing,FETish, 0, 1, 455, 2, 0, 1
+timing,LALA, 0, 1, 455, 1, 0, 1
+timing,LALA, 0, 1, 455, 2, 0, 1
+timing,Airwindows Consolidated, 0, 1, 455, 1, 0, 1
+timing,Airwindows Consolidated, 0, 1, 455, 2, 0, 1
