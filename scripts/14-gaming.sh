@@ -26,7 +26,6 @@ echo "Instalando herramientas Vulkan NVIDIA..."
 
 sudo zypper install -y --auto-agree-with-licenses \
 libvulkan1 \
-vulkan-loader \
 vulkan-tools
 
 
